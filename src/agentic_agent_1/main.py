@@ -1,6 +1,7 @@
 from ddgs import DDGS
 from dotenv import load_dotenv
 from langgraph.graph import START, END, StateGraph
+from langgraph.types import Send
 
 # Initialize client and run a text search
 # results = DDGS().text("whats a dog", max_results=5)
@@ -17,7 +18,7 @@ class AgentState(TypedDict):
     nutrition_data: dict
     generation: str
     retry_count: int
-    decision: str
+    routes: list[str]
 
 
 def retrieve_data_node(state: AgentState):
@@ -60,8 +61,20 @@ def route_decision_node(state: AgentState):
     print("--- Decide node ---")
 
     return {
-        "decision": "pass"
+        "routes": ["retrieve", "nutrition_api"]
     }
+
+
+def route_dispatch_node(state: AgentState):
+    print("--- dispatch node ---")
+    routes = state["routes"]
+
+    route_decision = [
+        Send(route, state)
+        for route in routes
+    ]
+
+    return route_decision
 
 
 def evaluator_node(state: AgentState):
@@ -75,28 +88,25 @@ GRADE_DOCUMENTS = "grade_documents"
 GENERATE = "generate"
 NUTRITION_API = "nutrition_api"
 
+
 builder = StateGraph(AgentState)
 
 builder.add_node(RETRIEVE, retrieve_data_node)
+builder.add_node(NUTRITION_API, nutrition_api_node)
 builder.add_node(GRADE_DOCUMENTS, grade_documents_node)
 builder.add_node(GENERATE, generate_answer_node)
-builder.add_node(NUTRITION_API, nutrition_api_node)
 
 builder.add_conditional_edges(
     START,
     route_decision_node,
-    {
-        RETRIEVE: RETRIEVE,
-        NUTRITION_API: NUTRITION_API,
-    }
 )
-builder.add_conditional_edges(
-    retrieve_data_node,
-    {
-        # regenerate node?
-    }
-)
-
+# builder.add_conditional_edges(
+#     retrieve_data_node,
+#     {
+#         GENERATE, GENERATE
+#     }
+# )
+builder.add_edge([RETRIEVE, NUTRITION_API], GENERATE)
 
 app = builder.compile()
 
