@@ -19,6 +19,7 @@ class AgentState(TypedDict):
     generation: str
     retry_count: int
     routes: list[str]
+    grade: str
 
 
 def retrieve_data_node(state: AgentState):
@@ -57,6 +58,11 @@ def nutrition_api_node(state: AgentState):
     pass
 
 
+def web_search_node(state: AgentState):
+
+    pass
+
+
 def route_decision_node(state: AgentState):
     print("--- Decide node ---")
 
@@ -77,36 +83,90 @@ def route_dispatch_node(state: AgentState):
     return route_decision
 
 
+def route_after_grading(state: AgentState):
+    return state["route"]
+
+
 def evaluator_node(state: AgentState):
     "check if suffiecent answer otherwise research again"
 
     pass
 
 
+def dispatch_combined(state: AgentState):
+    print("--- DISPATCH COMBINED ---")
+
+    return [
+        Send(COMBINED_RETRIEVE, state),
+        Send(COMBINED_NUTRITION, state),
+    ]
+
+
 RETRIEVE = "retrieve"
 GRADE_DOCUMENTS = "grade_documents"
 GENERATE = "generate"
 NUTRITION_API = "nutrition_api"
+WEB_SEARCH = "web_search"
+ROUTE_DECISION = "route_decision"
 
+NUTRITION_ONLY = "nutrition_only"
+KNOWLEDGE_ONLY = "knowledge_only"
+COMBINED = "combined"
+
+COMBINED_START = "combined_start"
+COMBINED_RETRIEVE = "combined_retrieve"
+COMBINED_NUTRITION = "combined_nutrition"
+GRADE_COMBINED = "grade_combined"
 
 builder = StateGraph(AgentState)
 
+builder.add_node(ROUTE_DECISION, route_decision_node, )
 builder.add_node(RETRIEVE, retrieve_data_node)
 builder.add_node(NUTRITION_API, nutrition_api_node)
+builder.add_node(WEB_SEARCH, web_search_node)
 builder.add_node(GRADE_DOCUMENTS, grade_documents_node)
 builder.add_node(GENERATE, generate_answer_node)
 
+builder.add_node(COMBINED_START, lambda state: {})
+builder.add_node(COMBINED_RETRIEVE, retrieve_data_node)
+builder.add_node(COMBINED_NUTRITION, nutrition_api_node)
+builder.add_node(GRADE_COMBINED, grade_documents_node)
+
+builder.add_edge(START, ROUTE_DECISION)
+
+# nutrition, knowledge, combined
 builder.add_conditional_edges(
-    START,
-    route_decision_node,
+    ROUTE_DECISION,
+    route_dispatch_node,
+    [
+        RETRIEVE,
+        NUTRITION_API,
+        COMBINED_START
+    ])
+
+builder.add_edge([RETRIEVE, NUTRITION_API], GRADE_DOCUMENTS)
+
+builder.add_conditional_edges(
+    GRADE_DOCUMENTS,
+    route_after_grading,
+    {
+        GENERATE: GENERATE,
+        WEB_SEARCH: WEB_SEARCH,
+    }
 )
-# builder.add_conditional_edges(
-#     retrieve_data_node,
-#     {
-#         GENERATE, GENERATE
-#     }
-# )
-builder.add_edge([RETRIEVE, NUTRITION_API], GENERATE)
+builder.add_edge(WEB_SEARCH, GENERATE)
+
+
+builder.add_conditional_edges(
+    COMBINED_START,
+    dispatch_combined
+)
+builder.add_edge(
+    [COMBINED_RETRIEVE, COMBINED_NUTRITION],
+    GRADE_COMBINED
+)
+
+builder.add_edge(GENERATE, END)
 
 app = builder.compile()
 
