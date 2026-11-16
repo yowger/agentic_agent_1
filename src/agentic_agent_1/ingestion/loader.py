@@ -39,3 +39,4 @@ def load_pdfs(directory: Path) -> list[Document]:
         documents.extend(pdf_documents)
 
     return documents
+

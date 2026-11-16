@@ -14,19 +14,21 @@ CHROMA_DIRECTORY = PROJECT_ROOT / "chroma_store"
 
 def main():
     documents = load_pdfs(RAW_DIRECTORY)
+    for document in documents:
+        print(document.metadata)
 
-    print(f"Total pages loaded: {len(documents)}")
+    # print(f"Total pages loaded: {len(documents)}")
 
-    chunks = split_documents(documents)
+    # chunks = split_documents(documents)
 
-    print(f"Total chunks created: {len(chunks)}")
+    # print(f"Total chunks created: {len(chunks)}")
 
-    create_vectorstore(
-        documents=chunks,
-        persist_directory=CHROMA_DIRECTORY,
-    )
+    # create_vectorstore(
+    #     documents=chunks,
+    #     persist_directory=CHROMA_DIRECTORY,
+    # )
 
-    print("Documents successfully stored.")
+    # print("Documents successfully stored.")
 
 
 if __name__ == "__main__":

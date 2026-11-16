@@ -22,3 +22,17 @@ def create_vectorstore(
     )
 
     return vectorstore
+
+
+def get_vectorstore(persist_directory: Path):
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small"
+    )
+
+    vectorstore = Chroma(
+        collection_name="nutrition_knowledge",
+        embedding_function=embeddings,
+        persist_directory=str(persist_directory),
+    )
+
+    return vectorstore
