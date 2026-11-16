@@ -1,0 +1,6 @@
+RETRIEVE = "retrieve"
+GRADE_DOCUMENTS = "grade_documents"
+GENERATE = "generate"
+NUTRITION_API = "nutrition_api"
+WEB_SEARCH = "web_search"
+ROUTE_DECISION = "route_decision"
