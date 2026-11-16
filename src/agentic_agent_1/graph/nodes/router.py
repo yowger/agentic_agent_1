@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from langchain.messages import HumanMessage, SystemMessage
+from langchain.messages import SystemMessage
 from dotenv import load_dotenv
 
 from agentic_agent_1.graph.state import AgentState
@@ -17,34 +17,29 @@ structured_llm_router = llm.with_structured_output(RouteDecision)
 
 
 router_system_msg = """
- You are a routing assistant for a food and nutrition knowledge assistant.
+You are a router for a food and nutrition assistant.
 
-Decide which data sources are needed to answer the question.
+Select all data sources needed to answer the user's question.
 
 Available routes:
 
-1. retrieve:
-    Use for nutrition knowledge, explanations, dietary
-    guidelines, health effects of foods, and general
-    educational questions.
+- retrieve: General nutrition knowledge, explanations, health benefits,
+  risks, dietary guidelines, and how nutrients affect the body.
 
-2. nutrition_api:
-    Use for specific food nutrient information such as
-    calories, protein, carbohydrates, fat, vitamins,
-    and minerals.
+- nutrition_api: Specific food nutrition values, including calories,
+  protein, carbohydrates, fats, vitamins, and minerals.
 
 Rules:
-- Choose retrieve for general nutrition knowledge.
-- Choose nutrition_api for specific food nutrient values.
-- Choose both when the question needs both knowledge
-    and nutrient information.
+- General knowledge or explanations → retrieve.
+- Specific nutrient amounts or food nutrition values → nutrition_api.
+- Both knowledge and nutrient values → both.
 - Always select at least one route.
 """
 
 
 router_prompt = ChatPromptTemplate.from_messages([
     SystemMessage(content=router_system_msg),
-    HumanMessage(content="{question}")
+    ("human", "{question}")
 ])
 
 question_router = router_prompt | structured_llm_router
