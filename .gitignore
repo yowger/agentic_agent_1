@@ -131,4 +131,4 @@ Thumbs.db
 # notes
 notes/
 
-data/chroma/
+chroma_store/

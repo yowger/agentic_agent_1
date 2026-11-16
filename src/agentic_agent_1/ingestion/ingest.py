@@ -9,7 +9,7 @@ load_dotenv()
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RAW_DIRECTORY = PROJECT_ROOT / "data" / "raw"
-CHROMA_DIRECTORY = PROJECT_ROOT / "data" / "chroma"
+CHROMA_DIRECTORY = PROJECT_ROOT / "chroma_store"
 
 
 def main():
