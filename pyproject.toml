@@ -10,6 +10,7 @@ requires-python = ">=3.12"
 dependencies = [
     "black>=26.10.1",
     "ddgs>=9.16.1",
+    "fonttools>=4.68.0",
     "isort>=9.0.2",
     "langchain>=1.5.0",
     "langchain-chroma>=1.1.0",
