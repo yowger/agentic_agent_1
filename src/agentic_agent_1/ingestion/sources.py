@@ -16,6 +16,7 @@ class ChunkingConfig(TypedDict, total=False):
 
 
 class PDFSource(TypedDict):
+    source_id: str
     filename: str
     metadata: SourceMetaData
     chunking_config: NotRequired[ChunkingConfig]
@@ -29,6 +30,7 @@ DEFAULT_CHUNKING: ChunkingConfig = {
 
 PDF_SOURCES: list[PDFSource] = [
     {
+        "source_id": "who_carbohydrate_intake_adults_children_2023",
         "filename": "carb_intake_all_ages_eng.pdf",
         "metadata": {
             "title": "Carbohydrate intake for adults and children",
@@ -40,6 +42,7 @@ PDF_SOURCES: list[PDFSource] = [
         }
     },
     {
+        "source_id": "who_healthy_diet_fact_sheet_2018",
         "filename": "healthy_diet_fact_sheet_eng.pdf",
         "metadata": {
             "title": "Healthy diet",
@@ -51,6 +54,7 @@ PDF_SOURCES: list[PDFSource] = [
         }
     },
     {
+        "source_id": "who_healthy_diets_2024",
         "filename": "healthy_diet_fact_sheet_eng.pdf",
         "metadata": {
             "title": "What are healthy diets?",
@@ -62,6 +66,7 @@ PDF_SOURCES: list[PDFSource] = [
         }
     },
     {
+        "source_id": "who_saturated_trans_fat_intake_2023",
         "filename": "sat_trans_fat_all_ages_eng.pdf",
         "metadata": {
             "title": "Saturated fatty acid  and trans-fatty acid intake for adults and children",
@@ -73,6 +78,7 @@ PDF_SOURCES: list[PDFSource] = [
         }
     },
     {
+        "source_id": "who_sodium_intake_adults_children_2012",
         "filename": "sodium_intake_all_ages_eng.pdf",
         "metadata": {
             "title": "Sodium intake for adults and children",
@@ -84,6 +90,7 @@ PDF_SOURCES: list[PDFSource] = [
         }
     },
     {
+        "source_id": "who_sugars_intake_adults_children_2015",
         "filename": "sugars_intake_all_ages_eng.pdf",
         "metadata": {
             "title": "Sugars intake for adults and children",
@@ -95,6 +102,7 @@ PDF_SOURCES: list[PDFSource] = [
         }
     },
     {
+        "source_id": "who_total_fat_intake_unhealthy_weight_gain_2023",
         "filename": "total_fat_all_ages_eng.pdf",
         "metadata": {
             "title": "Total fat intake for the prevention of unhealthy weight gain in adults and children",

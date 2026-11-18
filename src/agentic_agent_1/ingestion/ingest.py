@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from agentic_agent_1.ingestion.loader import load_pdf
 from agentic_agent_1.ingestion.splitter import split_documents
-from agentic_agent_1.vector_stores.chroma import create_vectorstore
+from agentic_agent_1.vector_stores.chroma import upsert_source_documents
 from agentic_agent_1.ingestion.sources import PDF_SOURCES, DEFAULT_CHUNKING
 from agentic_agent_1.ingestion.metadata import enrich_metadata
 
@@ -59,6 +59,17 @@ def main():
     print(f"total chunks created: {len(chunks)}")
     print(f"chunk 0: {chunks[0].page_content}")
     print(f"first chunk metadata: {chunks[0].metadata}")
+
+    upsert_source_documents(
+        documents=chunks,
+        persist_directory=CHROMA_DIRECTORY,
+        source_id=source["source_id"]
+    )
+
+    print(
+        f"Successfully ingested {source['filename']}: "
+        f"{len(chunks)} chunks"
+    )
 
 
 if __name__ == "__main__":

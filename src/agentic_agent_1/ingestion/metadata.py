@@ -11,5 +11,6 @@ def enrich_metadata(
 
     for document in documents:
         document.metadata.update(metadata)
+        document.metadata["source_id"] = source["source_id"]
 
     return documents
