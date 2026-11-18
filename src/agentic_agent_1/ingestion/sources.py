@@ -23,7 +23,7 @@ class PDFSource(TypedDict):
 
 
 DEFAULT_CHUNKING: ChunkingConfig = {
-    "chunk_size": 1500,
+    "chunk_size": 1000,
     "chunk_overlap": 200
 }
 

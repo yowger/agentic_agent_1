@@ -1,5 +1,4 @@
-from ddgs import DDGS
-from dotenv import load_dotenv
+# from ddgs import DDGS
 from langgraph.graph import START, END, StateGraph
 
 from agentic_agent_1.graph.consts import ROUTE_DECISION

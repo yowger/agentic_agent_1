@@ -1,15 +1,14 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.messages import SystemMessage
-from dotenv import load_dotenv
 
+from agentic_agent_1.config.config import settings
 from agentic_agent_1.graph.state import AgentState
 from agentic_agent_1.graph.schemas.router import RouteDecision
 
-load_dotenv()
 
 llm = ChatOpenAI(
-    model="gpt-4o-mini",
+    model=settings.ROUTER_MODEL,
     temperature=0
 )
 
