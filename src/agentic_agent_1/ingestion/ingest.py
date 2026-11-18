@@ -1,22 +1,16 @@
-from pathlib import Path
-from dotenv import load_dotenv
-
 from agentic_agent_1.ingestion.sources import PDF_SOURCES, DEFAULT_CHUNKING
+from agentic_agent_1.config.paths import RAW_DIRECTORY, CHROMA_DIRECTORY
 from agentic_agent_1.ingestion.sources import PDFSource
 from agentic_agent_1.ingestion.loader import load_pdf
 from agentic_agent_1.ingestion.splitter import split_documents
 from agentic_agent_1.vector_stores.chroma import upsert_source_documents
 from agentic_agent_1.ingestion.metadata import enrich_metadata
 
-load_dotenv()
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-RAW_DIRECTORY = PROJECT_ROOT / "data" / "raw"
-CHROMA_DIRECTORY = PROJECT_ROOT / "chroma_store"
 
 
 def ingest_source(source: PDFSource):
     file_path = RAW_DIRECTORY / source["filename"]
+    source_id = source["source_id"]
 
     documents = load_pdf(file_path)
 
@@ -38,7 +32,7 @@ def ingest_source(source: PDFSource):
     upsert_source_documents(
         documents=chunks,
         persist_directory=CHROMA_DIRECTORY,
-        source_id=source["source_id"]
+        source_id=source_id
     )
 
     print(
@@ -49,7 +43,9 @@ def ingest_source(source: PDFSource):
 
 def ingest_all_sources():
     for source in PDF_SOURCES:
-        ingest_source(source)
+        ingest_source(
+            source=source
+        )
 
 
 def main():
