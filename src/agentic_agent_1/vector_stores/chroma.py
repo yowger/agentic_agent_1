@@ -2,9 +2,13 @@ from pathlib import Path
 from typing import List
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
+from dotenv import load_dotenv
 
 from agentic_agent_1.vector_stores.consts import COLLECTION_NAME
 from agentic_agent_1.vector_stores.embeddings import get_embeddings
+
+
+load_dotenv()
 
 
 def create_vectorstore(
@@ -23,7 +27,7 @@ def create_vectorstore(
     return vectorstore
 
 
-def get_vectorstore(persist_directory: Path):
+def get_vectorstore(persist_directory: Path) -> Chroma:
     embeddings = get_embeddings()
 
     vectorstore = Chroma(
