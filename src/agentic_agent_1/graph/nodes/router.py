@@ -6,7 +6,11 @@ from agentic_agent_1.config.settings import settings
 from agentic_agent_1.graph.schemas.router import RouteDecision
 from agentic_agent_1.graph.state import AgentState
 
-llm = ChatOpenAI(model=settings.ROUTER_MODEL, temperature=0)
+llm = ChatOpenAI(
+    api_key=settings.OPENAI_API_KEY,
+    model=settings.ROUTER_MODEL,
+    temperature=0
+)
 
 structured_llm_router = llm.with_structured_output(RouteDecision)
 
@@ -33,14 +37,17 @@ Rules:
 
 
 router_prompt = ChatPromptTemplate.from_messages(
-    [SystemMessage(content=router_system_msg), ("human", "{question}")]
+    [
+        SystemMessage(content=router_system_msg),
+        ("human", "{question}")
+    ]
 )
 
 question_router = router_prompt | structured_llm_router
 
 
 def route_decision_node(state: AgentState):
-    print("__ROUTE_DECISION___")
+    print("--- ROUTE DECISION ---")
 
     question = state["question"]
 
