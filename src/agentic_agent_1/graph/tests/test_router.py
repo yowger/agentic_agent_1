@@ -1,6 +1,4 @@
-
 from agentic_agent_1.graph.nodes.router import question_router
-
 
 test_cases = [
     {
@@ -31,9 +29,7 @@ test_cases = [
 
 
 for test in test_cases:
-    result = question_router.invoke({
-        "question": test["question"]
-    })
+    result = question_router.invoke({"question": test["question"]})
 
     actual = set(result.routes)
     expected = set(test["expected"])

@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 
@@ -6,7 +7,7 @@ from langchain_core.documents import Document
 def load_pdf(file_path: Path) -> list[Document]:
     """Load a pdf file and extract its pages as LangChain Document Objects.
 
-    Args: 
+    Args:
         file_path: Path to the target PDF file.
 
     Returns:
@@ -26,4 +27,3 @@ def load_pdf(file_path: Path) -> list[Document]:
     loader = PyPDFLoader(str(file_path))
 
     return loader.load()
-

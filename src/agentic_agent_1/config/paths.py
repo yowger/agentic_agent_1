@@ -1,8 +1,11 @@
 from pathlib import Path
 
-PACKAGE_DIR = Path(__file__).resolve().parents[1]
+ROOT_DIR = Path(__file__).resolve().parents[3]
 
-DATA_DIR = PACKAGE_DIR / "data"
-RAW_DIRECTORY = DATA_DIR / "raw"
+CHROMA_DIR = ROOT_DIR / "chroma_store"
+ENV_DIR = ROOT_DIR / ".env"
 
-CHROMA_DIRECTORY = PACKAGE_DIR / "chroma_store"
+SRC_DIR = ROOT_DIR / "src"
+PROJECT_DIR = SRC_DIR / "agentic_agent_1"
+DATA_DIR = PROJECT_DIR / "data"
+RAW_DIR = DATA_DIR / "raw"

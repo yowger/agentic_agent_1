@@ -1,10 +1,10 @@
-from typing import TypedDict, NotRequired, Literal
+from typing import Literal, NotRequired, TypedDict
 
 
 class SourceMetaData(TypedDict):
     title: str
     organization: str
-    document_type: Literal["guideline", "fact_sheet",  "joint_statement"]
+    document_type: Literal["guideline", "fact_sheet", "joint_statement"]
     topic: str
     language: str
     publication_year: int
@@ -22,10 +22,7 @@ class PDFSource(TypedDict):
     chunking_config: NotRequired[ChunkingConfig]
 
 
-DEFAULT_CHUNKING: ChunkingConfig = {
-    "chunk_size": 1000,
-    "chunk_overlap": 200
-}
+DEFAULT_CHUNKING: ChunkingConfig = {"chunk_size": 1000, "chunk_overlap": 200}
 
 
 PDF_SOURCES: list[PDFSource] = [
@@ -38,8 +35,8 @@ PDF_SOURCES: list[PDFSource] = [
             "document_type": "guideline",
             "topic": "Carbohydrates",
             "language": "en",
-            "publication_year": 2023
-        }
+            "publication_year": 2023,
+        },
     },
     {
         "source_id": "who_healthy_diet_fact_sheet_2018",
@@ -50,8 +47,8 @@ PDF_SOURCES: list[PDFSource] = [
             "document_type": "fact_sheet",
             "topic": "Healthy_diet",
             "language": "en",
-            "publication_year": 2018
-        }
+            "publication_year": 2018,
+        },
     },
     {
         "source_id": "who_healthy_diets_2024",
@@ -62,8 +59,8 @@ PDF_SOURCES: list[PDFSource] = [
             "document_type": "guideline",
             "topic": "What are healthy diets?",
             "language": "en",
-            "publication_year": 2024
-        }
+            "publication_year": 2024,
+        },
     },
     {
         "source_id": "who_saturated_trans_fat_intake_2023",
@@ -74,8 +71,8 @@ PDF_SOURCES: list[PDFSource] = [
             "document_type": "guideline",
             "topic": "dietary_facts",
             "language": "en",
-            "publication_year": 2023
-        }
+            "publication_year": 2023,
+        },
     },
     {
         "source_id": "who_sodium_intake_adults_children_2012",
@@ -86,8 +83,8 @@ PDF_SOURCES: list[PDFSource] = [
             "document_type": "guideline",
             "topic": "sodium",
             "language": "en",
-            "publication_year": 2012
-        }
+            "publication_year": 2012,
+        },
     },
     {
         "source_id": "who_sugars_intake_adults_children_2015",
@@ -98,8 +95,8 @@ PDF_SOURCES: list[PDFSource] = [
             "document_type": "guideline",
             "topic": "Sugars",
             "language": "en",
-            "publication_year": 2015
-        }
+            "publication_year": 2015,
+        },
     },
     {
         "source_id": "who_total_fat_intake_unhealthy_weight_gain_2023",
@@ -110,8 +107,7 @@ PDF_SOURCES: list[PDFSource] = [
             "document_type": "guideline",
             "topic": "dietary_facts",
             "language": "en",
-            "publication_year": 2023
-        }
+            "publication_year": 2023,
+        },
     },
-
 ]

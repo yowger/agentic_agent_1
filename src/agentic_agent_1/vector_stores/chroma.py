@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import List
+
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
@@ -36,23 +37,15 @@ def get_vectorstore(persist_directory: Path) -> Chroma:
 
 
 def upsert_source_documents(
-    documents: List[Document],
-    persist_directory: Path,
-    source_id: str
+    documents: List[Document], persist_directory: Path, source_id: str
 ) -> Chroma:
     vectorstore = get_vectorstore(persist_directory)
 
     existing_ids = vectorstore.get(where={"source_id": source_id})["ids"]
 
-    new_ids = [
-        f"{source_id}:chunk:{index}"
-        for index in range(len(documents))
-    ]
+    new_ids = [f"{source_id}:chunk:{index}" for index in range(len(documents))]
 
-    vectorstore.add_documents(
-        documents=documents,
-        ids=new_ids
-    )
+    vectorstore.add_documents(documents=documents, ids=new_ids)
 
     stale_ids = list(set(existing_ids) - set(new_ids))
 

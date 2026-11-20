@@ -12,9 +12,6 @@
 # from langchain_core.documents import Document
 
 
-
-
-
 # def retrieve_data_node(state: AgentState):
 #     print("--- RETRIEVE ---")
 

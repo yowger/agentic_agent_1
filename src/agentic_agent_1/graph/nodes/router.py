@@ -1,16 +1,12 @@
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
 from langchain.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
-from agentic_agent_1.config.config import settings
-from agentic_agent_1.graph.state import AgentState
+from agentic_agent_1.config.settings import settings
 from agentic_agent_1.graph.schemas.router import RouteDecision
+from agentic_agent_1.graph.state import AgentState
 
-
-llm = ChatOpenAI(
-    model=settings.ROUTER_MODEL,
-    temperature=0
-)
+llm = ChatOpenAI(model=settings.ROUTER_MODEL, temperature=0)
 
 structured_llm_router = llm.with_structured_output(RouteDecision)
 
@@ -36,10 +32,9 @@ Rules:
 """
 
 
-router_prompt = ChatPromptTemplate.from_messages([
-    SystemMessage(content=router_system_msg),
-    ("human", "{question}")
-])
+router_prompt = ChatPromptTemplate.from_messages(
+    [SystemMessage(content=router_system_msg), ("human", "{question}")]
+)
 
 question_router = router_prompt | structured_llm_router
 
@@ -49,12 +44,8 @@ def route_decision_node(state: AgentState):
 
     question = state["question"]
 
-    decision: RouteDecision = question_router.invoke({
-        "question": question
-    })
+    decision: RouteDecision = question_router.invoke({"question": question})
 
     print("Selected routes:", decision.routes)
 
-    return {
-        "routes": decision.routes
-    }
+    return {"routes": decision.routes}
