@@ -4,6 +4,7 @@ from typing import List
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
+from agentic_agent_1.config.paths import CHROMA_DIR
 from agentic_agent_1.config.settings import settings
 from agentic_agent_1.vector_stores.embeddings import get_embeddings
 
@@ -24,22 +25,22 @@ def create_vectorstore(
     return vectorstore
 
 
-def get_vectorstore(persist_directory: Path) -> Chroma:
+def get_vectorstore() -> Chroma:
     embeddings = get_embeddings()
 
     vectorstore = Chroma(
         collection_name=settings.COLLECTION_NAME,
         embedding_function=embeddings,
-        persist_directory=str(persist_directory),
+        persist_directory=str(CHROMA_DIR),
     )
 
     return vectorstore
 
 
 def upsert_source_documents(
-    documents: List[Document], persist_directory: Path, source_id: str
+    documents: List[Document], source_id: str
 ) -> Chroma:
-    vectorstore = get_vectorstore(persist_directory)
+    vectorstore = get_vectorstore()
 
     existing_ids = vectorstore.get(where={"source_id": source_id})["ids"]
 

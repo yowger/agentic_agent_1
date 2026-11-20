@@ -1,4 +1,4 @@
-from agentic_agent_1.config.paths import CHROMA_DIR, RAW_DIR
+from agentic_agent_1.config.paths import RAW_DIR
 from agentic_agent_1.ingestion.loader import load_pdf
 from agentic_agent_1.ingestion.metadata import enrich_metadata
 from agentic_agent_1.ingestion.sources import DEFAULT_CHUNKING, PDF_SOURCES, PDFSource
@@ -21,10 +21,12 @@ def ingest_source(source: PDFSource):
     chunks = split_documents(documents, chunking_config)
 
     upsert_source_documents(
-        documents=chunks, persist_directory=CHROMA_DIR, source_id=source_id
+        documents=chunks,
+        source_id=source_id
     )
 
-    print(f"Successfully ingested {source['filename']}: " f"{len(chunks)} chunks")
+    print(
+        f"Successfully ingested {source['filename']}: " f"{len(chunks)} chunks")
 
 
 def ingest_all_sources():
