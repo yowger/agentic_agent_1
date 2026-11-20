@@ -3,6 +3,11 @@ from typing import TypedDict, NotRequired
 from langchain_core.documents import Document
 
 
+class Aggregated_context(TypedDict):
+    documents: list[Document]
+    nutrition_data: NotRequired[dict]
+
+
 class AgentState(TypedDict):
     question: str
     documents: list[Document]
@@ -11,4 +16,4 @@ class AgentState(TypedDict):
     retry_count: NotRequired[int]
     routes: NotRequired[list[str]]
     grade: NotRequired[str]
-    aggregated_context: NotRequired[str]
+    aggregated_context: NotRequired[Aggregated_context]

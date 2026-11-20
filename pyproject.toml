@@ -20,6 +20,7 @@ dependencies = [
     "langgraph>=1.2.22",
     "pypdf>=7.1.0",
     "python-dotenv>=1.2.4",
+    "rich>=15.0.0",
 ]
 
 [project.scripts]

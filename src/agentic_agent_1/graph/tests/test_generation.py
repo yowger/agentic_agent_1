@@ -1,8 +1,30 @@
+from rich import print
+from rich.panel import Panel
+from rich.pretty import Pretty
+
 from agentic_agent_1.graph.graph import app
 
+
 result = app.invoke({
-    "question": "Why does the body need carbohydrates?"
+    "question": "Besides salt, what other foods have sodium?"
 })
 
-print("\n--- ANSWER ---")
-print(result)
+print("\n[bold green]--- AGGREGATED CONTEXT ---[/bold green]")
+
+print(
+    Panel(
+        Pretty(result.get("aggregated_context", {}), expand_all=True),
+        title="Context",
+        border_style="cyan"
+    )
+)
+
+print("\n[bold green]--- ANSWER ---[/bold green]")
+
+print(
+    Panel(
+        result["generation"],
+        title="Generated Answer",
+        border_style="green"
+    )
+)
