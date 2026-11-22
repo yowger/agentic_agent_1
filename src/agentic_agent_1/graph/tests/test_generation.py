@@ -3,11 +3,18 @@ from rich.panel import Panel
 from rich.pretty import Pretty
 
 from agentic_agent_1.graph.graph import app
+from agentic_agent_1.vector_stores.chroma import get_vectorstore
 
+vectorstore = get_vectorstore()
 
-result = app.invoke({
-    "question": "Besides salt, what other foods have sodium?"
-})
+result = app.invoke(
+    {
+        "question": "Besides salt, what other foods have sodium?",
+    },
+    context={
+        "vectorstore": vectorstore
+    }
+)
 
 print("\n[bold green]--- AGGREGATED CONTEXT ---[/bold green]")
 

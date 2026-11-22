@@ -20,13 +20,16 @@
 
 # TODO
 
+from langgraph.runtime import Runtime
 
 from agentic_agent_1.graph.state import AgentState
-from agentic_agent_1.vector_stores.instances import vectorstore
+from agentic_agent_1.graph.context import GraphContext
 
 
-def retrieve_node(state: AgentState) -> AgentState:
+def retrieve_node(state: AgentState, runtime: Runtime[GraphContext]) -> AgentState:
     print("--- RETRIEVE NODE ---")
+
+    vectorstore = runtime.context["vectorstore"]
 
     question = state["question"]
 

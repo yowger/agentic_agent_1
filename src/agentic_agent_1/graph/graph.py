@@ -1,8 +1,8 @@
-# from ddgs import DDGS
 from langgraph.graph import END, START, StateGraph
 
 from agentic_agent_1.graph.consts import AGGREGATE, ROUTE_DECISION, RETRIEVE, NUTRITION_API, GENERATE
 from agentic_agent_1.graph.state import AgentState
+from agentic_agent_1.graph.context import GraphContext
 from agentic_agent_1.graph.nodes.router import route_decision_node
 from agentic_agent_1.graph.nodes.route_dispatch import route_dispatch_node
 from agentic_agent_1.graph.nodes.retrieve import retrieve_node
@@ -11,7 +11,10 @@ from agentic_agent_1.graph.nodes.aggregate import aggregate_node
 from agentic_agent_1.graph.nodes.route_after_aggregate import route_after_aggregate
 from agentic_agent_1.graph.nodes.generate import generate_node
 
-workflow = StateGraph(AgentState)
+workflow = StateGraph(
+    AgentState,
+    context_schema=GraphContext
+)
 
 workflow.add_node(ROUTE_DECISION, route_decision_node)
 workflow.add_node(RETRIEVE, retrieve_node)
