@@ -1,9 +1,9 @@
 from agentic_agent_1.vector_stores.chroma import get_vectorstore
 
 vectorstore = get_vectorstore()
+retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 
-results = vectorstore.similarity_search(
-    "Why does the body need carbohydrates?", k=4)
+results = retriever.invoke("Why does the body need carbohydrates?")
 
 print(f"results: {results}")
 for i, doc in enumerate(results, start=1):

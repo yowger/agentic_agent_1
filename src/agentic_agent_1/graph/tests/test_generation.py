@@ -6,13 +6,14 @@ from agentic_agent_1.graph.graph import app
 from agentic_agent_1.vector_stores.chroma import get_vectorstore
 
 vectorstore = get_vectorstore()
+retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 
 result = app.invoke(
     {
         "question": "Besides salt, what other foods have sodium?",
     },
     context={
-        "vectorstore": vectorstore
+        "retriever": retriever
     }
 )
 

@@ -1,6 +1,7 @@
-from typing import  TypedDict
+from typing import TypedDict
 
-from langchain_core.vectorstores import VectorStore
+from langchain_core.retrievers import BaseRetriever
+
 
 class GraphContext(TypedDict):
-    vectorstore: VectorStore
+    retriever: BaseRetriever

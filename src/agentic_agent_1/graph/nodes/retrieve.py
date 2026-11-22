@@ -29,14 +29,11 @@ from agentic_agent_1.graph.context import GraphContext
 def retrieve_node(state: AgentState, runtime: Runtime[GraphContext]) -> AgentState:
     print("--- RETRIEVE NODE ---")
 
-    vectorstore = runtime.context["vectorstore"]
+    retriever = runtime.context["retriever"]
 
     question = state["question"]
 
-    documents = vectorstore.similarity_search(
-        query=question,
-        k=4
-    )
+    documents = retriever.invoke(question)
 
     return {
         "documents": documents
