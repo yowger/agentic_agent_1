@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str = "text-embedding-3-small"
     ROUTER_MODEL: str = "gpt-4o-mini"
     GENERATOR_MODEL: str = "gpt-4o-mini"
+    RETRIEVER_GRADER_MODEL: str = "gpt-4o-mini"
 
     COLLECTION_NAME: str = "nutrition_knowledge"
 

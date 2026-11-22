@@ -13,3 +13,9 @@ generate_llm = ChatOpenAI(
     model=settings.GENERATOR_MODEL,
     temperature=0
 )
+
+grader_llm = ChatOpenAI(
+    api_key=settings.OPENAI_API_KEY,
+    model=settings.RETRIEVER_GRADER_MODEL,
+    temperature=0
+)

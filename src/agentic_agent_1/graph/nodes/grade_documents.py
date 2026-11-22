@@ -1,40 +1,41 @@
-# from typing import Any, Dict
+import asyncio
+from agentic_agent_1.graph.state import AgentState
 
-# from agentic_agent_1.graph.chains.retrieval_grader import retrieval_grader
-# from agentic_agent_1.graph.state import GraphState
+from agentic_agent_1.chains.retrieval_grader import retrieval_grader
 
 
-# def grade_documents(state: GraphState) -> Dict[str, Any]:
-#     """
-#     Determines whether the retrieved documents are relevant to the question
-#     If any document is not relevant, we will set a flag to run web search
+async def grade_documents(state: AgentState) -> AgentState:
+    question = state["question"]
+    documents = state["documents"]
 
-#     Args:
-#         state (dict): The current graph state
+    grading_inputs = [
+        {
+            "question": question,
+            "document": document.page_content
+        }
+        for document in documents
+    ]
 
-#     Returns:
-#         state (dict): Filtered out irrelevant documents and updated web_search state
-#     """
+    scores = await retrieval_grader.abatch(
+        grading_inputs,
+        config={
+            "max_concurrency": 5
+        },
+    )
 
-#     print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
-#     question = state["question"]
-#     documents = state["documents"]
+    relevant_documents = []
 
-#     filtered_docs = []
-#     web_search = False
+    for document, score in zip(documents, scores):
+        grade = score.binary_score
 
-#     for d in documents:
-#         score = retrieval_grader.invoke(
-#             {"question": question, "document": d.page_content}
-#         )
-#         grade = score.binary_score
-#         if grade.lower() == "yes":
-#             print("---GRADE: DOCUMENT RELEVANT---")
-#             filtered_docs.append(d)
-#         else:
-#             print("---GRADE: DOCUMENT NOT RELEVANT---")
-#             web_search = True
-#             continue
-#     return {"documents": filtered_docs, "question": question, "web_search": web_search}
+        print(f"Document: {document.metadata.get('source_id')}")
+        print(f"Grade: {grade}")
+        print(f"Document: {document.page_content}")
 
-# redo
+
+        if grade.lower() == "yes":
+            relevant_documents.append(document)
+
+    return {
+        "documents": relevant_documents
+    }

@@ -1,6 +1,6 @@
 from langgraph.graph import END, START, StateGraph
 
-from agentic_agent_1.graph.consts import AGGREGATE, ROUTE_DECISION, RETRIEVE, NUTRITION_API, GENERATE
+from agentic_agent_1.graph.consts import AGGREGATE, ROUTE_DECISION, RETRIEVE, NUTRITION_API, GENERATE, GRADE_DOCUMENTS
 from agentic_agent_1.graph.state import AgentState
 from agentic_agent_1.graph.context import GraphContext
 from agentic_agent_1.graph.nodes.router import route_decision_node
@@ -10,6 +10,8 @@ from agentic_agent_1.graph.nodes.nutrition_api import nutrition_api_node
 from agentic_agent_1.graph.nodes.aggregate import aggregate_node
 from agentic_agent_1.graph.nodes.route_after_aggregate import route_after_aggregate
 from agentic_agent_1.graph.nodes.generate import generate_node
+from agentic_agent_1.graph.nodes.grade_documents import grade_documents
+
 
 workflow = StateGraph(
     AgentState,
@@ -21,6 +23,7 @@ workflow.add_node(RETRIEVE, retrieve_node)
 workflow.add_node(NUTRITION_API, nutrition_api_node)
 workflow.add_node(AGGREGATE, aggregate_node, defer=True)
 workflow.add_node(GENERATE, generate_node)
+workflow.add_node(GRADE_DOCUMENTS, grade_documents)
 
 workflow.add_edge(START, ROUTE_DECISION)
 workflow.add_conditional_edges(
@@ -31,7 +34,8 @@ workflow.add_conditional_edges(
         NUTRITION_API
     ]
 )
-workflow.add_edge(RETRIEVE, AGGREGATE)
+workflow.add_edge(RETRIEVE, GRADE_DOCUMENTS)
+workflow.add_edge(GRADE_DOCUMENTS, AGGREGATE)
 workflow.add_edge(NUTRITION_API, AGGREGATE)
 workflow.add_conditional_edges(
     AGGREGATE,

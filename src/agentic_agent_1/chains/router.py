@@ -1,10 +1,9 @@
-from langchain.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 
 from agentic_agent_1.graph.schemas.router import RouteDecision
 from agentic_agent_1.llms.models import router_llm
 
-router_system_msg = """
+system_prompt = """
 You are a router for a food and nutrition assistant.
 
 Analyze the user's question and determine:
@@ -40,7 +39,7 @@ Metadata extraction rules:
 
 router_prompt = ChatPromptTemplate.from_messages(
     [
-        SystemMessage(content=router_system_msg),
+        ("system", system_prompt),
         ("human", "{question}")
     ]
 )
