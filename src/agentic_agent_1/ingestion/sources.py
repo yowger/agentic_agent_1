@@ -22,7 +22,7 @@ class PDFSource(TypedDict):
     chunking_config: NotRequired[ChunkingConfig]
 
 
-DEFAULT_CHUNKING: ChunkingConfig = {"chunk_size": 1000, "chunk_overlap": 200}
+DEFAULT_CHUNKING: ChunkingConfig = {"chunk_size": 750, "chunk_overlap": 100}
 
 
 PDF_SOURCES: list[PDFSource] = [
@@ -33,7 +33,7 @@ PDF_SOURCES: list[PDFSource] = [
             "title": "Carbohydrate intake for adults and children",
             "organization": "WHO",
             "document_type": "guideline",
-            "topic": "Carbohydrates",
+            "topic": "carbohydrates",
             "language": "en",
             "publication_year": 2023,
         },
@@ -57,7 +57,7 @@ PDF_SOURCES: list[PDFSource] = [
             "title": "What are healthy diets?",
             "organization": "WHO",
             "document_type": "guideline",
-            "topic": "What are healthy diets?",
+            "topic": "what_are_healthy_diets",
             "language": "en",
             "publication_year": 2024,
         },
@@ -93,7 +93,7 @@ PDF_SOURCES: list[PDFSource] = [
             "title": "Sugars intake for adults and children",
             "organization": "WHO",
             "document_type": "guideline",
-            "topic": "Sugars",
+            "topic": "sugars",
             "language": "en",
             "publication_year": 2015,
         },

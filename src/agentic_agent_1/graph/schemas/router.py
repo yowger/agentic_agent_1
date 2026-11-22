@@ -1,6 +1,7 @@
 from typing import Literal
-
 from pydantic import BaseModel, Field
+
+from agentic_agent_1.graph.schemas.metadata_filter import MetadataFilter
 
 Routes = list[Literal["retrieve", "nutrition_api"]]
 
@@ -13,3 +14,4 @@ class RouteDecision(BaseModel):
             "Choose retrieve, nutrition_api, or both."
         ),
     )
+    metadata_filter: MetadataFilter
