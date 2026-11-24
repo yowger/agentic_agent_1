@@ -6,7 +6,7 @@ from agentic_agent_1.graph.schemas.metadata_filter import MetadataFilter
 Routes = list[Literal["retrieve", "nutrition_api"]]
 
 
-class RouteDecision(BaseModel):
+class RouteQuery(BaseModel):
     routes: Routes = Field(
         min_length=1,
         description=(

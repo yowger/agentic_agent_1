@@ -1,6 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-from agentic_agent_1.graph.schemas.router import RouteDecision
+from agentic_agent_1.graph.schemas.router import RouteQuery
 from agentic_agent_1.llms.models import router_llm
 
 system_prompt = """
@@ -44,7 +44,7 @@ router_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-structured_llm_router = router_llm.with_structured_output(RouteDecision)
+structured_llm_router = router_llm.with_structured_output(RouteQuery)
 
 
 question_router_chain = router_prompt | structured_llm_router

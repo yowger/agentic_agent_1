@@ -13,8 +13,10 @@ class Aggregated_context(TypedDict):
 class AgentState(TypedDict):
     question: str
     documents: list[Document]
+    web_documents: NotRequired[list[Document]]
     nutrition_data: NotRequired[dict]
     generation: NotRequired[str]
+    web_search: NotRequired[bool]
     retry_count: NotRequired[int]
     routes: NotRequired[Routes]
     metadata_filter: MetadataFilter

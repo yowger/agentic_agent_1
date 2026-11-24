@@ -1,5 +1,4 @@
 from agentic_agent_1.graph.state import AgentState
-
 from agentic_agent_1.chains.generate import generation_chain
 
 
@@ -10,6 +9,7 @@ def generate_node(state: AgentState) -> AgentState:
     context = state.get("aggregated_context", {})
 
     documents = context.get("documents", [])
+    web_documents = context.get("web_documents", [])
     nutrition_data = context.get("nutrition_data")
 
     document_context = ""
@@ -29,19 +29,37 @@ def generate_node(state: AgentState) -> AgentState:
             f"Content: {doc.page_content}\n"
         )
 
+    web_context = ""
+
+    for i, doc in enumerate(web_documents, start=1):
+        metadata = doc.metadata
+
+        title = metadata.get("title", "Unknown title")
+        source = metadata.get("source", "Unknown URL")
+
+        web_context += (
+            f"\n[Web Source {i}]\n"
+            f"Title: {title}\n"
+            f"URL: {source}\n"
+            f"Content: {doc.page_content}\n"
+        )
+
     nutrition_context = ""
 
     if nutrition_data:
-        nutrition_context = f"\nNutrition Data:\n{nutrition_data}"
+        nutrition_context = (
+            f"\nNutrition API Data:\n{nutrition_data}\n"
+        )
 
     formatted_context = (
         f"Retrieved Documents:\n{document_context}\n"
+        f"Web Search Results:\n{web_context}\n"
         f"{nutrition_context}"
     )
 
     response = generation_chain.invoke({
         "question": question,
-        "context": formatted_context
+        "context": formatted_context,
     })
 
     return {

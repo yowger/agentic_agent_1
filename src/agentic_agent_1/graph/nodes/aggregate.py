@@ -6,12 +6,9 @@ def aggregate_node(state: AgentState) -> AgentState:
 
     context = {
         "documents": state.get("documents", []),
+        "web_documents": state.get("web_documents", []),
+        "nutrition_data": state.get("nutrition_data")
     }
-
-    nutrition_data = state.get("nutrition_data")
-
-    if nutrition_data:
-        context["nutrition_data"] = nutrition_data
 
     return {
         "aggregated_context": context

@@ -1,12 +1,17 @@
-import asyncio
 from agentic_agent_1.graph.state import AgentState
 
 from agentic_agent_1.chains.retrieval_grader import retrieval_grader
 
 
-async def grade_documents(state: AgentState) -> AgentState:
+async def grade_documents_node(state: AgentState) -> AgentState:
     question = state["question"]
     documents = state["documents"]
+
+    if not documents:
+        return {
+            "documents": [],
+            "web_search": True
+        }
 
     grading_inputs = [
         {
@@ -32,10 +37,17 @@ async def grade_documents(state: AgentState) -> AgentState:
         print(f"Grade: {grade}")
         print(f"Document: {document.page_content}")
 
-
         if grade.lower() == "yes":
             relevant_documents.append(document)
 
+    # relevant_documents = [
+    #     doc for doc, score in zip(documents, scores)
+    #     if score.binary_score.lower() == "yes"
+    # ]
+
+    web_search = not bool(relevant_documents)
+
     return {
-        "documents": relevant_documents
+        "documents": relevant_documents,
+        "web_search": web_search
     }

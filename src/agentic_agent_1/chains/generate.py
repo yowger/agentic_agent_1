@@ -14,12 +14,15 @@ Rules:
     clearly say so.
 - If multiple sources provide information, combine them
     into a clear and coherent answer.
+- Cite local documents using their title and page number when available.
+- Cite web sources using their provided URLs.
+- Distinguish between local documents and external web sources.
 - Answer naturally and avoid unnecessary technical language.
         """
 
 generate_prompt = ChatPromptTemplate.from_messages([
     (
-        "system", system_prompt  
+        "system", system_prompt
     ),
     (
         "human",

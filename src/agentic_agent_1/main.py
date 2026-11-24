@@ -1,12 +1,12 @@
-# from ddgs import DDGS
+from ddgs import DDGS
 # from dotenv import load_dotenv
 # from langgraph.graph import START, END, StateGraph
 # from langgraph.types import Send
 
 # # Initialize client and run a text search
-# # results = DDGS().text("whats a dog", max_results=5)
+results = DDGS().text("How does carbs help body", max_results=5)
 
-# # print(results)
+print(results)
 
 # from typing import TypedDict
 # from langchain_core.documents import Document

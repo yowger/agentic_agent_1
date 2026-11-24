@@ -15,6 +15,8 @@ async def main():
         {
             # "question": "Besides salt, what other foods have sodium?",
             # "question": "what foods have sodium?",
+            # "question": "What is a pikachu?",
+            # "question": "What is a pikachu?",
             "question": "What is trans fat?",
             # "question": "What is trans fat? check for 2023 books if any",
             # "question": "What is trans fat?",
@@ -25,6 +27,8 @@ async def main():
     )
 
     print("\n[bold green]--- AGGREGATED CONTEXT ---[/bold green]")
+
+    print(Pretty(result, expand_all=True))
 
     print(
         Panel(
