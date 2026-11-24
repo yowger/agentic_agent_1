@@ -17,8 +17,8 @@ async def main():
             # "question": "what foods have sodium?",
             # "question": "What is a pikachu?",
             # "question": "What is a pikachu?",
-            "question": "What is trans fat?",
-            # "question": "What is trans fat? check for 2023 books if any",
+            # "question": "What is trans fat?",
+            "question": "What is trans fat? check for 2026 books if any",
             # "question": "What is trans fat?",
         },
         context={
