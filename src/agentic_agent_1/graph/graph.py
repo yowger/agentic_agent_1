@@ -1,6 +1,6 @@
 from langgraph.graph import END, START, StateGraph
 
-from agentic_agent_1.graph.consts import AGGREGATE, ROUTE_DECISION, RETRIEVE, NUTRITION_API, GENERATE, GRADE_DOCUMENTS, WEB_SEARCH
+from agentic_agent_1.graph.consts import AGGREGATE, ROUTE_DECISION, RETRIEVE, NUTRITION_API, GENERATE, GRADE_DOCUMENTS, WEB_SEARCH, OUT_OF_SCOPE
 from agentic_agent_1.graph.state import AgentState
 from agentic_agent_1.graph.context import GraphContext
 from agentic_agent_1.graph.nodes.route_query import route_query_node
@@ -33,7 +33,8 @@ workflow.add_conditional_edges(
     route_dispatch_node,
     [
         RETRIEVE,
-        NUTRITION_API
+        NUTRITION_API,
+        OUT_OF_SCOPE
     ]
 )
 workflow.add_edge(RETRIEVE, GRADE_DOCUMENTS)

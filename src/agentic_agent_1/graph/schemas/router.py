@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 from agentic_agent_1.graph.schemas.metadata_filter import MetadataFilter
 
-Routes = list[Literal["retrieve", "nutrition_api"]]
+Routes = list[Literal["retrieve", "nutrition_api", "out_of_scope"]]
 
 
 class RouteQuery(BaseModel):

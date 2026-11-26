@@ -26,8 +26,24 @@ test_cases = [
         ["nutrition_api"],
     ),
     (
+        "Who is Naruto?",
+        ["out_of_scope"],
+    ),
+    (
         "Is chicken breast healthy and how much protein does it contain?",
         ["retrieve", "nutrition_api"],
+    ),
+    (
+        "How much protein is in two eggs and what is React?",
+        ["nutrition_api"],
+    ),
+    (
+        "Explain the health benefits of vegetables and how does Python work?",
+        ["retrieve"],
+    ),
+    (
+        "How many calories are in an apple and explain machine learning.",
+        ["nutrition_api"],
     ),
 ]
 
